@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sketch</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <!-- MediaPipe (loaded before sketch.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  </head>
+
+  <body>
+    <!-- container where the p5 canvas will be inserted -->
+    <div id="canvas-container"></div>
+
+    <script src="sketch.js"></script>
+
+    <!-- Brief summary shown below the canvas (keeps user informed about the sketch) -->
+    <div id="summary" class="summary" aria-live="polite">
+      <strong>About this sketch</strong>
+      <p>This sketch uses MediaPipe Hands and p5.js to detect hand landmarks from your webcam and draw points and connections on the live video. Allow camera access when prompted. Works best in a secure context (https or localhost).</p>
+    </div>
+  </body>
+</html>
