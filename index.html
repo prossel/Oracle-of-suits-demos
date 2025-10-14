@@ -1,66 +1,141 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>Oracle of suits demos — Index</title>
-		<style>
-			body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 0; padding: 24px; background:#fafafa; color:#111 }
-			header { margin-bottom: 18px }
-			h1 { margin: 0 0 6px 0; font-size: 1.6rem }
-			p.lead { margin:0 0 18px 0; color:#555 }
-			.list { display: grid; gap: 12px; max-width:900px }
-			.item { background: #fff; border: 1px solid #e6e6e6; padding: 14px; border-radius:8px }
-			.item h2 { margin: 0 0 6px 0; font-size: 1.1rem }
-			.item p { margin: 0; color:#444 }
-			.meta { margin-top:8px; color:#666; font-size:0.9rem }
-			footer { margin-top:24px; color:#666; font-size:0.9rem }
-			a.demo-link { color:#0066cc; text-decoration: none }
-			a.demo-link:hover { text-decoration: underline }
-			code { background:#f3f3f3; padding:2px 6px; border-radius:4px }
-		</style>
-	</head>
-	<body>
-		<header>
-			<h1>Oracle of suits — Demos</h1>
-			<p class="lead">Quick links to demo pages found in subfolders. Open these locally with a simple static server (camera demos require a secure context/server).</p>
-		</header>
 
-		<main class="list">
-            <section class="item">
-                <h2><a class="demo-link" href="MediaPipe Hand Landmarks starter/index.html" target="_blank" rel="noopener">MediaPipe Hand Landmarks</a></h2>
-                <p>Minimal starter that demonstrates MediaPipe Hands with p5.js: shows detected hand landmarks and connections on a live video canvas.</p>
-                <div class="meta">Path: <code>MediaPipe Hand Landmarks starter/index.html</code></div>
-            </section>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Oracle of suits demos — Index</title>
+	<style>
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+			margin: 0;
+			padding: 24px;
+			background: #fafafa;
+			color: #111
+		}
 
-            <section class="item">
-				<h2><a class="demo-link" href="MediaPipe Hand baloon/index.html" target="_blank" rel="noopener">MediaPipe Hand Balloon</a></h2>
-				<p>A physics-driven balloon demo that uses MediaPipe Hands to detect your hand landmarks. Touch the balloon to make it rise. Includes a video toggle (V).</p>
-				<div class="meta">Path: <code>MediaPipe Hand baloon/index.html</code></div>
-			</section>
+		header {
+			margin-bottom: 18px
+		}
 
-			<section class="item">
-				<h2><a class="demo-link" href="MediaPipe Hand Gesture heuristic/index.html" target="_blank" rel="noopener">MediaPipe Hand Gesture heuristic</a></h2>
-				<p>Starter project for simple hand gesture recognition using MediaPipe Hands and p5.js. Detects a few common gestures with a small heuristic classifier and displays their names above each hand.</p>
-				<div class="meta">Path: <code>MediaPipe Hand Gesture heuristic/index.html</code></div>
-			</section>
+		h1 {
+			margin: 0 0 6px 0;
+			font-size: 1.6rem
+		}
 
-			<section class="item">
-				<h2>Next steps</h2>
-				<ul>
-					<li>Hand gesture with MediaPipe default classifier</li>
-					<li>Hand gesture with trained classifier</li>
-				</ul>
-			</section>
+		p.lead {
+			margin: 0 0 18px 0;
+			color: #555
+		}
 
-		</main>
+		.list {
+			display: grid;
+			gap: 12px;
+			max-width: 900px
+		}
 
-		<footer>
-			<p>Camera demos require serving the files over <strong>http://localhost</strong> (or https). To quickly run a local server from this folder, use one of the commands below in a terminal opened at this folder:</p>
-			<pre><code>python3 -m http.server 8000
+		.item {
+			background: #fff;
+			border: 1px solid #e6e6e6;
+			padding: 14px;
+			border-radius: 8px
+		}
+
+		.item h2 {
+			margin: 0 0 6px 0;
+			font-size: 1.1rem
+		}
+
+		.item p {
+			margin: 0;
+			color: #444
+		}
+
+		.meta {
+			margin-top: 8px;
+			color: #666;
+			font-size: 0.9rem
+		}
+
+		footer {
+			margin-top: 24px;
+			color: #666;
+			font-size: 0.9rem
+		}
+
+		a.demo-link {
+			color: #0066cc;
+			text-decoration: none
+		}
+
+		a.demo-link:hover {
+			text-decoration: underline
+		}
+
+		code {
+			background: #f3f3f3;
+			padding: 2px 6px;
+			border-radius: 4px
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Oracle of suits — Demos</h1>
+		<p class="lead">Quick links to demo pages found in subfolders. Open these locally with a simple static server
+			(camera demos require a secure context/server).</p>
+	</header>
+
+	<main class="list">
+		<section class="item">
+			<h2><a class="demo-link" href="MediaPipe Hand Landmarks starter/index.html" target="_blank"
+					rel="noopener">MediaPipe Hand Landmarks</a></h2>
+			<p>Minimal starter that demonstrates MediaPipe Hands with p5.js: shows detected hand landmarks and
+				connections on a live video canvas.</p>
+			<div class="meta">Path: <code>MediaPipe Hand Landmarks starter/index.html</code></div>
+		</section>
+
+		<section class="item">
+			<h2><a class="demo-link" href="MediaPipe Hand baloon/index.html" target="_blank" rel="noopener">MediaPipe
+					Hand Balloon</a></h2>
+			<p>A physics-driven balloon demo that uses MediaPipe Hands to detect your hand landmarks. Touch the balloon
+				to make it rise. Includes a video toggle (V).</p>
+			<div class="meta">Path: <code>MediaPipe Hand baloon/index.html</code></div>
+		</section>
+
+		<section class="item">
+			<h2><a class="demo-link" href="MediaPipe Hand Gesture heuristic/index.html" target="_blank"
+					rel="noopener">MediaPipe Hand Gesture heuristic</a></h2>
+			<p>Starter project for simple hand gesture recognition using MediaPipe Hands and p5.js. Detects a few common
+				gestures with a small heuristic classifier and displays their names above each hand.</p>
+			<div class="meta">Path: <code>MediaPipe Hand Gesture heuristic/index.html</code></div>
+		</section>
+
+		<section class="item">
+			<h2><a class="demo-link" href="MediaPipe Hand Gesture default classifier/index.html" target="_blank"
+					rel="noopener">MediaPipe Hand Gesture default classifier</a></h2>
+			<p>Hand gesture recognition using MediaPipe's built-in GestureRecognizer. Detects common gestures like
+				thumbs up, victory, pointing, and more using the default pre-trained model.</p>
+			<div class="meta">Path: <code>MediaPipe Hand Gesture default classifier/index.html</code></div>
+		</section>
+
+		<section class="item">
+			<h2>Next steps</h2>
+			<ul>
+				<li>Hand gesture with trained classifier</li>
+			</ul>
+		</section>
+	</main>
+
+	<footer>
+		<p>Camera demos require serving the files over <strong>http://localhost</strong> (or https). To quickly run a
+			local server from this folder, use one of the commands below in a terminal opened at this folder:</p>
+		<pre><code>python3 -m http.server 8000
 # then open http://localhost:8000/ in your browser</code></pre>
-			<p>If you use a different server (live-server, http-server, etc.) that's fine too. Open the demo links from this index page once the server is running.</p>
-		</footer>
-	</body>
-</html>
+		<p>If you use a different server (live-server, http-server, etc.) that's fine too. Open the demo links from this
+			index page once the server is running.</p>
+	</footer>
+</body>
 
+</html>
