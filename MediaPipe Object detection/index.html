@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MediaPipe Object Detection</title>
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <script src="../libraries/p5.min.js"></script>
+  <script src="../libraries/p5.sound.min.js"></script>
+</head>
+
+<body>
+  <!-- container where the p5 canvas will be inserted -->
+  <div id="canvas-container"></div>
+
+  <script type="module" src="sketch.js"></script>
+
+  <div id="summary" class="summary" aria-live="polite">
+    <strong>About this demo</strong>
+    <p>This demo uses MediaPipe Object Detector to detect and identify common objects in the video feed.
+       Detected objects are highlighted with bounding boxes and labeled with their category and confidence score.
+    </p>
+    <p>Shortcut: press V to toggle video</p>
+  </div>
+</body>
+
+</html>
