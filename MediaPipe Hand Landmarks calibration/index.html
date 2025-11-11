@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hand Landmarks — Active Area Calibration</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="../libraries/p5.min.js"></script>
+    <script src="../libraries/p5.sound.min.js"></script>
+    <!-- MediaPipe (loaded before sketch.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  </head>
+
+  <body>
+    <!-- container where the p5 canvas will be inserted -->
+    <div id="canvas-container"></div>
+
+    <script src="sketch.js"></script>
+
+    <!-- Brief summary shown below the canvas (keeps user informed about the sketch) -->
+    <div id="summary" class="summary" aria-live="polite">
+      <strong>About this calibration example</strong>
+      <p>This sketch is the base for calibrating an on-screen active area using MediaPipe Hands and p5.js. For now it shows landmarks and connections on top of your live video. In a later step, a brief calibration flow will record the usable region and visualize it on the canvas. Allow camera access when prompted. Works best in a secure context (https or localhost).</p>
+    </div>
+  </body>
+</html>
