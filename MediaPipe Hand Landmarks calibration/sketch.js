@@ -1,14 +1,20 @@
 /**
- * MediaPipe Hand Landmarks — Active Area Calibration (scaffold)
+ * MediaPipe Hand Landmarks — Active Area Calibration
  *
- * This sketch currently mirrors the basic hand-landmarks overlay:
+ * This sketch demonstrates active area calibration for hand tracking:
  * - Captures webcam video (selfie mode)
  * - Runs MediaPipe Hands
  * - Draws landmarks and connections on a p5 canvas
+ * - Displays a calibratable active area (cyan rectangle)
+ * - Maps index fingertip coordinates to the active area
+ * - Provides keyboard controls for position/size adjustment
+ * - Persists settings to localStorage
  *
- * Next iteration (not yet implemented here) will add a short calibration flow
- * to record an on-canvas "active area" (e.g., bounds or polygon) derived from
- * the live landmarks, and visualize it for downstream interaction.
+ * Controls:
+ * - C: Toggle calibration mode
+ * - P: Position adjustment mode (use arrow keys)
+ * - S: Size adjustment mode (use arrow keys)
+ * - SHIFT + arrows: Faster adjustments
  */
 let videoElement;
 let hands;
