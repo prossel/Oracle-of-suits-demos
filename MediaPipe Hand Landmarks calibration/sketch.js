@@ -171,6 +171,16 @@ function drawLandmarks(landmarks) {
     const x = lm.x * width;
     const y = lm.y * height;
     circle(x, y, 6);
+    }
+
+    // Display index tip coordinates (landmark 8)
+    if (landmarks[8]) {
+      const ix = landmarks[8].x * width;
+      const iy = landmarks[8].y * height;
+      fill(255, 255, 0);
+      textSize(16);
+      textAlign(CENTER, BOTTOM);
+      text(`(${ix.toFixed(1)}, ${iy.toFixed(1)})`, ix + 8, iy - 8);
   }
 }
 
