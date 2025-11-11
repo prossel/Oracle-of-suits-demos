@@ -16,6 +16,16 @@ let detections = null;
 let cam;
 let selfieMode = true;
 
+// Active area definition
+let activeArea = {
+  x: 160,      // top-left x
+  y: 120,      // top-left y
+  width: 320,  // width of the area
+  height: 240  // height of the area
+};
+const MOVE_STEP = 5;    // pixels to move with arrow keys
+const SIZE_STEP = 10;   // pixels to resize with SHIFT + arrows
+
 function setup() {
   createCanvas(640, 480)
     // Put the canvas inside the #canvas-container div so it appears above the summary
@@ -83,6 +93,12 @@ function draw() {
       drawLandmarks(landmarks);
     }
   }
+
+  // Draw active area
+  drawActiveArea();
+  
+  // Display active area coordinates
+  displayActiveAreaInfo();
 }
 
 const HAND_CONNECTIONS = [
@@ -122,5 +138,65 @@ function drawLandmarks(landmarks) {
     const x = lm.x * width;
     const y = lm.y * height;
     circle(x, y, 6);
+  }
+}
+
+function drawActiveArea() {
+  // Draw green rectangle for active area
+  push();
+  noFill();
+  stroke(0, 255, 0);
+  strokeWeight(3);
+  rect(activeArea.x, activeArea.y, activeArea.width, activeArea.height);
+  pop();
+}
+
+function displayActiveAreaInfo() {
+  // Display coordinates in top-left corner with a semi-transparent background
+  push();
+  fill(0, 0, 0, 180);
+  noStroke();
+  rect(10, 10, 250, 90);
+  
+  fill(255);
+  textSize(14);
+  textAlign(LEFT, TOP);
+  text(`Active Area:`, 20, 20);
+  text(`Position: (${activeArea.x}, ${activeArea.y})`, 20, 40);
+  text(`Size: ${activeArea.width} x ${activeArea.height}`, 20, 60);
+  text(`Arrows: move | SHIFT+Arrows: resize`, 20, 80);
+  pop();
+}
+
+function keyPressed() {
+  // Check if SHIFT is pressed for resizing
+  if (keyIsDown(SHIFT)) {
+    // Resize the active area
+    if (keyCode === LEFT_ARROW) {
+      activeArea.width = max(50, activeArea.width - SIZE_STEP);
+    } else if (keyCode === RIGHT_ARROW) {
+      activeArea.width = min(width - activeArea.x, activeArea.width + SIZE_STEP);
+    } else if (keyCode === UP_ARROW) {
+      activeArea.height = max(50, activeArea.height - SIZE_STEP);
+    } else if (keyCode === DOWN_ARROW) {
+      activeArea.height = min(height - activeArea.y, activeArea.height + SIZE_STEP);
+    }
+  } else {
+    // Move the active area
+    if (keyCode === LEFT_ARROW) {
+      activeArea.x = max(0, activeArea.x - MOVE_STEP);
+    } else if (keyCode === RIGHT_ARROW) {
+      activeArea.x = min(width - activeArea.width, activeArea.x + MOVE_STEP);
+    } else if (keyCode === UP_ARROW) {
+      activeArea.y = max(0, activeArea.y - MOVE_STEP);
+    } else if (keyCode === DOWN_ARROW) {
+      activeArea.y = min(height - activeArea.height, activeArea.y + MOVE_STEP);
+    }
+  }
+  
+  // Prevent default browser behavior for arrow keys
+  if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW || 
+      keyCode === UP_ARROW || keyCode === DOWN_ARROW) {
+    return false;
   }
 }
