@@ -24,7 +24,10 @@ let activeArea = {
   height: 240  // height of the area
 };
 const MOVE_STEP = 5;    // pixels to move with arrow keys
-const SIZE_STEP = 10;   // pixels to resize with SHIFT + arrows
+const SIZE_STEP = 5;   // pixels to resize with SHIFT + arrows
+let calibrationMode = true;  // calibration mode active by default
+let positionMode = false;  // position adjustment mode
+let sizeMode = false;      // size adjustment mode
 
 function setup() {
   createCanvas(640, 480)
@@ -94,14 +97,17 @@ function draw() {
     }
   }
 
-  // Handle continuous keyboard input for active area adjustment
-  handleActiveAreaControls();
-  
-  // Draw active area
-  drawActiveArea();
-  
-  // Display active area coordinates
-  displayActiveAreaInfo();
+  // Handle calibration mode features
+  if (calibrationMode) {
+    // Handle continuous keyboard input for active area adjustment
+    handleActiveAreaControls();
+    
+    // Draw active area
+    drawActiveArea();
+    
+    // Display active area coordinates
+    displayActiveAreaInfo();
+  }
 }
 
 const HAND_CONNECTIONS = [
@@ -149,8 +155,8 @@ function handleActiveAreaControls() {
   const moveStep = keyIsDown(SHIFT) ? MOVE_STEP : 1;
   const sizeStep = keyIsDown(SHIFT) ? SIZE_STEP : 1;
   
-  // Check if P is pressed for positioning
-  if (keyIsDown(80)) { // 80 is the keyCode for 'P'
+  // Handle position mode
+  if (positionMode) {
     if (keyIsDown(LEFT_ARROW)) {
       activeArea.x = max(0, activeArea.x - moveStep);
     }
@@ -165,8 +171,8 @@ function handleActiveAreaControls() {
     }
   }
   
-  // Check if S is pressed for sizing
-  if (keyIsDown(83)) { // 83 is the keyCode for 'S'
+  // Handle size mode
+  if (sizeMode) {
     if (keyIsDown(LEFT_ARROW)) {
       activeArea.width = max(50, activeArea.width - sizeStep);
     }
@@ -195,9 +201,9 @@ function drawActiveArea() {
 function displayActiveAreaInfo() {
   // Display coordinates in top-left corner with a semi-transparent background
   push();
-  fill(0, 0, 0, 180);
+  fill(0, 0, 0, 50);
   noStroke();
-  rect(10, 10, 280, 90);
+  rect(10, 10, 320, 130);
   
   fill(255);
   textSize(14);
@@ -205,13 +211,43 @@ function displayActiveAreaInfo() {
   text(`Active Area:`, 20, 20);
   text(`Position: (${activeArea.x}, ${activeArea.y})`, 20, 40);
   text(`Size: ${activeArea.width} x ${activeArea.height}`, 20, 60);
-  text(`P+Arrows: move | S+Arrows: size`, 20, 80);
+  
+  // Show current mode
+  let modeText = positionMode ? '[P] Position mode' : (sizeMode ? '[S] Size mode' : 'P: position | S: size');
+  text(modeText, 20, 80);
+  
+  text(`SHIFT: faster adjustments`, 20, 100);
+  text(`C: toggle calibration mode`, 20, 120);
   pop();
 }
 
 function keyPressed() {
-  // Prevent default browser behavior for arrow keys when P or S is held
-  if ((keyIsDown(80) || keyIsDown(83)) && 
+  // Toggle calibration mode with C key
+  if (key === 'c' || key === 'C') {
+    calibrationMode = !calibrationMode;
+    console.log(`Calibration mode: ${calibrationMode ? 'ON' : 'OFF'}`);
+  }
+  
+  // Toggle position mode with P key
+  if (key === 'p' || key === 'P') {
+    positionMode = !positionMode;
+    if (positionMode) {
+      sizeMode = false; // Turn off size mode
+    }
+    console.log(`Position mode: ${positionMode ? 'ON' : 'OFF'}`);
+  }
+  
+  // Toggle size mode with S key
+  if (key === 's' || key === 'S') {
+    sizeMode = !sizeMode;
+    if (sizeMode) {
+      positionMode = false; // Turn off position mode
+    }
+    console.log(`Size mode: ${sizeMode ? 'ON' : 'OFF'}`);
+  }
+  
+  // Prevent default browser behavior for arrow keys when in position or size mode
+  if ((positionMode || sizeMode) && 
       (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW || 
        keyCode === UP_ARROW || keyCode === DOWN_ARROW)) {
     return false;
