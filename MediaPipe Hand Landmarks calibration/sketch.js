@@ -17,7 +17,7 @@ let cam;
 let selfieMode = true;
 
 // Active area definition
-let activeArea = {
+let activeArea = loadActiveArea() || {
   x: 160,      // top-left x
   y: 120,      // top-left y
   width: 320,  // width of the area
@@ -28,6 +28,30 @@ const SIZE_STEP = 5;   // pixels to resize with SHIFT + arrows
 let calibrationMode = true;  // calibration mode active by default
 let positionMode = false;  // position adjustment mode
 let sizeMode = false;      // size adjustment mode
+let saveTimeout = null;    // for debouncing saves
+
+// Load active area from localStorage
+function loadActiveArea() {
+  const stored = localStorage.getItem('activeArea');
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch (e) {
+      console.error('Failed to load active area:', e);
+      return null;
+    }
+  }
+  return null;
+}
+
+// Save active area to localStorage
+function saveActiveArea() {
+  try {
+    localStorage.setItem('activeArea', JSON.stringify(activeArea));
+  } catch (e) {
+    console.error('Failed to save active area:', e);
+  }
+}
 
 function setup() {
   createCanvas(640, 480)
@@ -155,19 +179,25 @@ function handleActiveAreaControls() {
   const moveStep = keyIsDown(SHIFT) ? MOVE_STEP : 1;
   const sizeStep = keyIsDown(SHIFT) ? SIZE_STEP : 1;
   
+  let changed = false;
+  
   // Handle position mode
   if (positionMode) {
     if (keyIsDown(LEFT_ARROW)) {
       activeArea.x = max(0, activeArea.x - moveStep);
+      changed = true;
     }
     if (keyIsDown(RIGHT_ARROW)) {
       activeArea.x = min(width - activeArea.width, activeArea.x + moveStep);
+      changed = true;
     }
     if (keyIsDown(UP_ARROW)) {
       activeArea.y = max(0, activeArea.y - moveStep);
+      changed = true;
     }
     if (keyIsDown(DOWN_ARROW)) {
       activeArea.y = min(height - activeArea.height, activeArea.y + moveStep);
+      changed = true;
     }
   }
   
@@ -175,16 +205,31 @@ function handleActiveAreaControls() {
   if (sizeMode) {
     if (keyIsDown(LEFT_ARROW)) {
       activeArea.width = max(50, activeArea.width - sizeStep);
+      changed = true;
     }
     if (keyIsDown(RIGHT_ARROW)) {
       activeArea.width = min(width - activeArea.x, activeArea.width + sizeStep);
+      changed = true;
     }
     if (keyIsDown(UP_ARROW)) {
       activeArea.height = max(50, activeArea.height - sizeStep);
+      changed = true;
     }
     if (keyIsDown(DOWN_ARROW)) {
       activeArea.height = min(height - activeArea.y, activeArea.height + sizeStep);
+      changed = true;
     }
+  }
+  
+  // Debounce save: only save 500ms after the last change
+  if (changed) {
+    if (saveTimeout) {
+      clearTimeout(saveTimeout);
+    }
+    saveTimeout = setTimeout(() => {
+      saveActiveArea();
+      console.log('Active area saved');
+    }, 500);
   }
 }
 
