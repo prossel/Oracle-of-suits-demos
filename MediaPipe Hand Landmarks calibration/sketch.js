@@ -173,14 +173,37 @@ function drawLandmarks(landmarks) {
     circle(x, y, 6);
     }
 
-    // Display index tip coordinates (landmark 8)
-    if (landmarks[8]) {
+    // Display index tip coordinates (landmark 8) and mapped to active area
+    if (calibrationMode && landmarks[8]) {
       const ix = landmarks[8].x * width;
       const iy = landmarks[8].y * height;
-      fill(255, 255, 0);
+
+      // Map to active area
+      let mappedX = map(ix, activeArea.x, activeArea.x + activeArea.width, 0, activeArea.width, false);
+      let mappedY = map(iy, activeArea.y, activeArea.y + activeArea.height, 0, activeArea.height, false);
+
+      // Measure text to determine background size
+      textSize(16);
+      const text1 = `(${ix.toFixed()}, ${iy.toFixed()})`;
+      const text2 = `(${mappedX.toFixed()}, ${mappedY.toFixed()})`;
+      const maxWidth = Math.max(textWidth(text1), textWidth(text2)) + 10;
+      const bgHeight = 60; // enough for two lines of text with padding
+
+      // Draw background
+      fill(0, 0, 0, 50);
+      noStroke();
+      rectMode(CENTER);
+      rect(ix, iy, maxWidth, bgHeight);
+      rectMode(CORNER);
+
+      // Draw text
+      fill(255, 255, 255);
       textSize(16);
       textAlign(CENTER, BOTTOM);
-      text(`(${ix.toFixed(1)}, ${iy.toFixed(1)})`, ix + 8, iy - 8);
+      text(text1, ix, iy - 8);
+      fill(0, 255, 255);
+      textAlign(CENTER, TOP);
+      text(text2, ix, iy + 8);
   }
 }
 
@@ -247,7 +270,7 @@ function drawActiveArea() {
   // Draw green rectangle for active area
   push();
   noFill();
-  stroke(0, 255, 0);
+  stroke(0, 255, 255);
   strokeWeight(3);
   rect(activeArea.x, activeArea.y, activeArea.width, activeArea.height);
   pop();
