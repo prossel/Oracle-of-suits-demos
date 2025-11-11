@@ -94,6 +94,9 @@ function draw() {
     }
   }
 
+  // Handle continuous keyboard input for active area adjustment
+  handleActiveAreaControls();
+  
   // Draw active area
   drawActiveArea();
   
@@ -141,6 +144,44 @@ function drawLandmarks(landmarks) {
   }
 }
 
+function handleActiveAreaControls() {
+  // Determine step size: use STEP if SHIFT is held, otherwise 1 pixel
+  const moveStep = keyIsDown(SHIFT) ? MOVE_STEP : 1;
+  const sizeStep = keyIsDown(SHIFT) ? SIZE_STEP : 1;
+  
+  // Check if P is pressed for positioning
+  if (keyIsDown(80)) { // 80 is the keyCode for 'P'
+    if (keyIsDown(LEFT_ARROW)) {
+      activeArea.x = max(0, activeArea.x - moveStep);
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+      activeArea.x = min(width - activeArea.width, activeArea.x + moveStep);
+    }
+    if (keyIsDown(UP_ARROW)) {
+      activeArea.y = max(0, activeArea.y - moveStep);
+    }
+    if (keyIsDown(DOWN_ARROW)) {
+      activeArea.y = min(height - activeArea.height, activeArea.y + moveStep);
+    }
+  }
+  
+  // Check if S is pressed for sizing
+  if (keyIsDown(83)) { // 83 is the keyCode for 'S'
+    if (keyIsDown(LEFT_ARROW)) {
+      activeArea.width = max(50, activeArea.width - sizeStep);
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+      activeArea.width = min(width - activeArea.x, activeArea.width + sizeStep);
+    }
+    if (keyIsDown(UP_ARROW)) {
+      activeArea.height = max(50, activeArea.height - sizeStep);
+    }
+    if (keyIsDown(DOWN_ARROW)) {
+      activeArea.height = min(height - activeArea.y, activeArea.height + sizeStep);
+    }
+  }
+}
+
 function drawActiveArea() {
   // Draw green rectangle for active area
   push();
@@ -156,7 +197,7 @@ function displayActiveAreaInfo() {
   push();
   fill(0, 0, 0, 180);
   noStroke();
-  rect(10, 10, 250, 90);
+  rect(10, 10, 280, 90);
   
   fill(255);
   textSize(14);
@@ -164,39 +205,15 @@ function displayActiveAreaInfo() {
   text(`Active Area:`, 20, 20);
   text(`Position: (${activeArea.x}, ${activeArea.y})`, 20, 40);
   text(`Size: ${activeArea.width} x ${activeArea.height}`, 20, 60);
-  text(`Arrows: move | SHIFT+Arrows: resize`, 20, 80);
+  text(`P+Arrows: move | S+Arrows: size`, 20, 80);
   pop();
 }
 
 function keyPressed() {
-  // Check if SHIFT is pressed for resizing
-  if (keyIsDown(SHIFT)) {
-    // Resize the active area
-    if (keyCode === LEFT_ARROW) {
-      activeArea.width = max(50, activeArea.width - SIZE_STEP);
-    } else if (keyCode === RIGHT_ARROW) {
-      activeArea.width = min(width - activeArea.x, activeArea.width + SIZE_STEP);
-    } else if (keyCode === UP_ARROW) {
-      activeArea.height = max(50, activeArea.height - SIZE_STEP);
-    } else if (keyCode === DOWN_ARROW) {
-      activeArea.height = min(height - activeArea.y, activeArea.height + SIZE_STEP);
-    }
-  } else {
-    // Move the active area
-    if (keyCode === LEFT_ARROW) {
-      activeArea.x = max(0, activeArea.x - MOVE_STEP);
-    } else if (keyCode === RIGHT_ARROW) {
-      activeArea.x = min(width - activeArea.width, activeArea.x + MOVE_STEP);
-    } else if (keyCode === UP_ARROW) {
-      activeArea.y = max(0, activeArea.y - MOVE_STEP);
-    } else if (keyCode === DOWN_ARROW) {
-      activeArea.y = min(height - activeArea.height, activeArea.y + MOVE_STEP);
-    }
-  }
-  
-  // Prevent default browser behavior for arrow keys
-  if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW || 
-      keyCode === UP_ARROW || keyCode === DOWN_ARROW) {
+  // Prevent default browser behavior for arrow keys when P or S is held
+  if ((keyIsDown(80) || keyIsDown(83)) && 
+      (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW || 
+       keyCode === UP_ARROW || keyCode === DOWN_ARROW)) {
     return false;
   }
 }
